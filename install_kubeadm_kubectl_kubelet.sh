@@ -25,3 +25,10 @@ gpgkey=https://pkgs.k8s.io/core:/stable:/v1.31/rpm/repodata/repomd.xml.key
 exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
 EOF
 
+# install kubelet, kubeadm and kubectl:
+yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+
+
+# (Optional) Enable the kubelet service before running kubeadm:
+systemctl enable --now kubelet
+
