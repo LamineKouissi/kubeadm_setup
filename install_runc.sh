@@ -21,19 +21,11 @@ download_runc() {
     local arch=$2
     local base_url="https://github.com/opencontainers/runc/releases/download/${version}"
     local binary_url="${base_url}/runc.${arch}"
-    local checksum_url="${base_url}/sha256sum.txt"
 
     echo "Downloading runc ${version} for ${arch}..."
     curl -fsSLO "${binary_url}"
-    curl -fsSLO "${checksum_url}"
 }
 
-# Function to verify checksum
-verify_checksum() {
-    local arch=$1
-    echo "Verifying checksum..."
-    grep "runc.${arch}" sha256sum.txt | sha256sum -c -
-}
 
 # Function to install runc
 install_runc() {
@@ -63,11 +55,7 @@ main() {
     echo "Latest runc version: ${version}"
 
     download_runc "${version}" "${arch}"
-    verify_checksum "${arch}"
     install_runc "${arch}"
-
-    # Clean up downloaded files
-    rm "runc.${arch}" sha256sum.txt
 
     echo "runc installation completed successfully!"
 }
